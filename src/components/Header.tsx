@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon, faBell, faEnvelope, faBars, faTimes, faAngleDown, faUser, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import admin from "../assets/images/man.png";
-import welcome from "../assets/images/smiling (1).png";
 import { useTheme } from '../utils/ThemeContext';
 import Dropdown from './Dropdown';
 
@@ -14,28 +13,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onToggleSidebar, sidebarOpen }) => {
     const { theme, setTheme } = useTheme();
-    const [animateMessage, setAnimateMessage] = useState(false);
 
     const toggleDarkMode = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
     };
-
-    useEffect(() => {
-        const showTimeout = setTimeout(() => {
-            setAnimateMessage(true);
-        }, 100);
-
-        const hideTimeout = setTimeout(() => {
-            setAnimateMessage(false);
-        }, 3500);
-
-        return () => {
-            clearTimeout(showTimeout);
-            clearTimeout(hideTimeout);
-        };
-    }, []);
 
     const notifications = [
         { label: 'Notification 1' },
@@ -68,15 +51,6 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, sidebarOpen }) => {
                     className="transition-transform duration-300"
                 />
             </button>
-            <div className="flex-grow flex justify-center">
-                <p
-                    className={`flex items-center gap-2 text-xl font-semibold transition-all duration-500 ease-in-out transform ${
-                        animateMessage ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-                    }`}
-                >
-                    Welcome back Admin <img src={welcome} alt="welcome" className='w-8' />
-                </p>
-            </div>
             <div className="flex items-center space-x-6">
                 <button onClick={toggleDarkMode}>
                     <FontAwesomeIcon icon={theme === 'dark' ? faSun as IconProp : faMoon as IconProp} size="lg" />
